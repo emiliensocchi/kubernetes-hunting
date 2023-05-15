@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-hunter
+spec:
+  containers:
+  - image: aquasec/kube-hunter:latest
+    name: kube-hunter
+    command: ["kube-hunter", "--pod"]
+  restartPolicy: Never

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: privileged
+spec:
+  hostPID: true
+  hostIPC: true
+  hostNetwork: true
+  volumes:
+  - name: host-volume
+    hostPath:
+      path: /
+  containers:
+  - image: <image_name>
+    name: privileged
+    command: ["/bin/sh", "-c", "sleep infinity"]
+    securityContext:
+      privileged: true
+      allowPrivilegeEscalation: true
+    volumeMounts:
+    - name: host-volume
+      mountPath: /host
+  restartPolicy: Never

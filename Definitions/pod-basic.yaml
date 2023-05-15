@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: basic
+spec:
+  containers:
+  - image: <image_name>
+    name: basic
+    command: ["/bin/sh", "-c", "sleep infinity"]
+  restartPolicy: Never
