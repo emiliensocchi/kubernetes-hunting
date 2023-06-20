@@ -17,6 +17,8 @@ spec:
     securityContext:
       privileged: true
       allowPrivilegeEscalation: true
+      capabilities:
+        add: ["SYS_ADMIN", "SYS_MODULE", "SYS_RAWIO", "SYS_CHROOT", "SYS_PTRACE", "SYS_BOOT", "SYSLOG", "NET_ADMIN", "NET_RAW", "DAC_READ_SEARCH"]
     volumeMounts:
     - name: host-volume
       mountPath: /host
