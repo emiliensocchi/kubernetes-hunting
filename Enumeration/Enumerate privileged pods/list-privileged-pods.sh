@@ -16,7 +16,7 @@ privileged_values=(
     'privileged'
     'allowPrivilegeEscalation'
 )
-namespaces=($(kubectl get namespaces -o json | jq -r '.items[] | .metadata | .name' | sort))
+namespaces=($(kubectl get namespaces -o json | jq -r '.items[] | .metadata | .name' | grep -v kube-system | sort))
 
 for namespace in ${namespaces[@]}
 {
