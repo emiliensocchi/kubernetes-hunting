@@ -45,16 +45,16 @@ namespaces=($(kubectl get namespaces -o json | jq -r '.items[] | .metadata | .na
 for namespace in ${namespaces[@]}
 {
     echo "[*] scraping namespace: $namespace"
-    service_accounts=($(kubectl get serviceAccounts -o json | jq -r '.items[] | .metadata | .name' | sort))
+    service_accounts=($(kubectl get serviceAccounts --namespace "$namespace" -o json | jq -r '.items[] | .metadata | .name' | sort))
 
     for service_account in ${service_accounts[@]}
     {
         if [[ "$passed_cloud" == 'azure' ]]
         then
-            is_workload_identity=$(kubectl get serviceAccount "$service_account" -o yaml | grep "$azure_annotation")
+            is_workload_identity=$(kubectl get serviceAccount "$service_account" --namespace "$namespace" -o yaml | grep "$azure_annotation")
         elif [[ "$passed_cloud" == 'gcp' ]]
         then
-            is_workload_identity=$(kubectl get serviceAccount "$service_account" -o yaml | grep "$gcp_annotation")
+            is_workload_identity=$(kubectl get serviceAccount "$service_account" --namespace "$namespace" -o yaml | grep "$gcp_annotation")
         fi
 
         if [[ "$is_workload_identity" ]]
